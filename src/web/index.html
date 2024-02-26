@@ -10,8 +10,8 @@ https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css
         .dropdown {
             position: absolute;
             display: inline-block;
-            top: 1vh;
-            right: 1vw;
+            top: 1rem;
+            right: 1rem;
         }
 
         * {
@@ -19,39 +19,132 @@ https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css
         }
 
         button {
-            background-color: transparent;
+            font-size: 1rem;
 
-            border: 1px solid black; 
+            box-sizing: border-box;
+            background-color: transparent;
+            border: 0.1rem solid black;
+            padding: 0.2rem 0.5rem;
+
+            width: 5rem;
+            height: 3rem;
         }
 
         button:hover {
-            transition: 0.5s ease;
-            border: 3px solid black;
+            border: 0.15rem solid black;
+        }
+
+        .inp {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            display: hidden;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .inp input {
+            width: 10rem;
+        }
+
+        .inp button {
+            margin-top: 1rem;
+
+            width: 10rem;
+            height: min-content;
+        }
+
+        .inp button:hover {
+            margin-top: calc(1rem - 0.1rem);
         }
     </style>
 </head>
 
 <body>
-    <h1>Welcome to gitable</h1>
+    <h1>welcome to gitable</h1>
     <div class="dropdown" style="float: right;">
-        <button onclick="login()">Login</button>
-        <button onclick="signup()">Signup</button>
+        <button onclick="login()">login</button>
+        <button onclick="signup()">signup</button>
     </div>
-    <p>Feel free to explore the repositories.</p>
+    <p>feel free to explore the repositories</p>
+
+    <div class="inp" id="input-user" hidden>
+        <input type="text" name="name" id="name" placeholder="name...">
+        <input type="password" name="password" id="password" placeholder="password...">
+        <button onclick="submit()" id="log_or_sign">submit</button>
+    </div>
 
     <script>
         function toggleDropdown() {
             document.getElementById("myDropdown").classList.toggle("show");
         }
 
+        function toggleInput() {
+            document.getElementById("input-user").style.display = "flex";
+        }
+
         function login() {
             // Dummy login method
             console.log("Login clicked");
+
+            toggleInput();
+            document.getElementById("log_or_sign").innerHTML = "login";
         }
 
         function signup() {
             // Dummy signup method
             console.log("Signup clicked");
+
+            toggleInput();
+            document.getElementById("log_or_sign").innerHTML = "signup";
+        }
+
+        function submit() {
+            switch (document.getElementById("log_or_sign").innerHTML) {
+                case "login":
+                    sendLogin();
+                    break;
+                case "signup":
+                    sendSignup();
+                    break;
+                default:
+                    console.log("Invalid state");
+            }
+
+        }
+
+        function sendLogin() {
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    password: document.getElementById("password").value
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    if (data.success) {
+                        alert("Login successful")
+                    } else {
+                        promptForPassword();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function promptForPassword() {
+            // actual prompt for password, not dummy! add it in the middle of the page
+            console.log("Prompt for password");
+
+
         }
     </script>
 </body>
