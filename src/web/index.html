@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>gitable</title>
+    <link href="
+https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css
+" rel="stylesheet">
+    <style>
+        .dropdown {
+            position: absolute;
+            display: inline-block;
+            top: 1vh;
+            right: 1vw;
+        }
+
+        * {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        button {
+            background-color: transparent;
+
+            border: 1px solid black; 
+        }
+
+        button:hover {
+            border: 3px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to gitable</h1>
+    <div class="dropdown" style="float: right;">
+        <button onclick="login()">Login</button>
+        <button onclick="signup()">Signup</button>
+    </div>
+    <p>Feel free to explore the repositories.</p>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        function login() {
+            // Dummy login method
+            console.log("Login clicked");
+        }
+
+        function signup() {
+            // Dummy signup method
+            console.log("Signup clicked");
+        }
+    </script>
+</body>
+
+</html>
